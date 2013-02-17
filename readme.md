@@ -30,6 +30,7 @@ STATUS  : No recent builds failed.
 
     # ~/.bash_profile
     export PATH=$HOME/local/git-jenkins-status/bin:$PATH
+    export MANPATH=$HOME/Dropbox/Projects/git-jenkins-status/share/man:$MANPATH
 
 ### CONFIGURE
 

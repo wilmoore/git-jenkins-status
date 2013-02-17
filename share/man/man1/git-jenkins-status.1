@@ -1,0 +1,53 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "GIT\-JENKINS\-STATUS" "1" "February 2013" "" "Git Jenkins Status"
+.
+.SH "NAME"
+\fBgit\-jenkins\-status\fR \- Quickly check Jenkins build status
+.
+.SH "EXAMPLE OUTPUT"
+.
+.nf
+
+JOB NAME: nwcoc\.org
+STATUS  : No recent builds failed\.
+.
+.fi
+.
+.SH "CONFIGURE"
+Configure the Jenkins root \fBURL\fR and \fBJOB\fR name\.
+.
+.IP "" 4
+.
+.nf
+
+% git config \-\-local jenkins\.status\.url :URL
+% git config \-\-local jenkins\.status\.job :JOB
+.
+.fi
+.
+.IP "" 0
+.
+.P
+\fIOptionally\fR configure your Jenkins \fBUSERNAME\fR and \fBPASSWORD\fR\.
+.
+.IP "" 4
+.
+.nf
+
+% git config \-\-local jenkins\.status\.username :USERNAME
+% git config \-\-local jenkins\.status\.password :PASSWORD
+.
+.fi
+.
+.IP "" 0
+.
+.SH "AUTHOR"
+Written by Wil Moore III <\fIwil\.moore@wilmoore\.com\fR>
+.
+.SH "REPORTING BUGS"
+<\fIhttps://github\.com/wilmoore/git\-jenkins\-status/issues\fR>
+.
+.SH "SEE ALSO"
+<\fIhttps://github\.com/wilmoore/git\-jenkins\-status\fR>
