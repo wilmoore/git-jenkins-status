@@ -12,7 +12,7 @@
 ################################################################################
 
 # program version
-VERSION=0.0.3
+VERSION=0.0.4
 
 # run from a subdirectory
 SUBDIRECTORY_OK=Yes
@@ -22,7 +22,15 @@ SUBDIRECTORY_OK=Yes
 ################################################################################
 
 . git-sh-setup
-. git-sh-i18n
+
+################################################################################
+# escapes
+################################################################################
+
+GREEN="\e[0;32m"
+YELLOW="\e[0;33m"
+RED="\e[0;31m"
+NOCOLOR="\e[0m"
 
 ################################################################################
 # check configuration
@@ -90,15 +98,27 @@ function status.of()
 # main
 ################################################################################
 
-echo ""
-for jobname in ${JENKINS_JOBS[@]}; do
-
-  echo "JOB NAME:" $jobname
-
-  status=$(status.of $jobname)
-
-  echo "STATUS  : $status"
+function main()
+{
   echo ""
+  for jobname in ${JENKINS_JOBS[@]}; do
 
-done
+    echo "JOB NAME:" $jobname
 
+    status=$(status.of $jobname)
+
+    if   [[ $status == "No recent builds failed." ]]; then
+      local COLOR=$GREEN
+    elif [[ $status == "Unable to retrieve status." ]]; then
+      local COLOR=$YELLOW
+    else
+      local COLOR=$RED
+    fi
+
+    printf "%s  : ${COLOR}%s${NOCOLOR}" "STATUS" "$status"
+    echo ""
+
+  done
+}
+
+main
