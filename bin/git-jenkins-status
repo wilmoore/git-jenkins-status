@@ -2,23 +2,17 @@
 
 ################################################################################
 # name: git-jenkins-status
-# what: quick jenkins/ci build status from the command-line
+# what: git extension to quickly check Jenkins build status.
 ################################################################################
 
 # copyright (c) 2013 Wil Moore III <wil.moore@wilmoore.com>
-
-################################################################################
-# command-line options
-################################################################################
-
-LONG_USAGE="quick jenkins build status from the command-line."
 
 ################################################################################
 # NOT RECOMMENDED TO MODIFY UNLESS YOU KNOW EXACTLY WHAT YOU ARE DOING!
 ################################################################################
 
 # program version
-VERSION=0.0.1
+VERSION=0.0.2
 
 # run from a subdirectory
 SUBDIRECTORY_OK=Yes

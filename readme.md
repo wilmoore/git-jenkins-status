@@ -8,11 +8,11 @@ git jenkins-status
 
 ### DESCRIPTION
 
-  Extension to quickly check Jenkins build status. Works with public Github.com or github:enterprise repos.
+  Git extension to quickly check Jenkins build status.
 
 ### RATIONALE
 
-  I like to know the status of the build at all times...simple as that.
+  I like to know the status of the build at all times.
 
 ### EXAMPLE OUTPUT
 
@@ -30,6 +30,22 @@ STATUS  : No recent builds failed.
 
     # ~/.bash_profile
     export PATH=$HOME/local/git-jenkins-status/bin:$PATH
+
+### CONFIGURE
+
+Configure the Jenkins root `URL` and `JOB` name.
+
+```
+% git config --local jenkins.status.url :URL"
+% git config --local jenkins.status.job :JOB"
+```
+
+_Optionally_ configure your Jenkins `USERNAME` and `PASSWORD`.
+
+```
+% git config --local jenkins.status.username :USERNAME"
+% git config --local jenkins.status.password :PASSWORD"
+```
 
 ### UPGRADE
 
