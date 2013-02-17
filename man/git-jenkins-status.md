@@ -1,4 +1,5 @@
-# git-jenkins-status(1)
+git-jenkins-status(1) -- Jenkins build status
+===============================================
 
 ### SYNOPSIS
 
@@ -12,26 +13,20 @@ git jenkins-status
 
 ### EXAMPLE OUTPUT
 
-```
-JOB NAME: nwcoc.org
-STATUS  : No recent builds failed.
-```
+    JOB NAME: nwcoc.org
+    STATUS  : No recent builds failed.
 
 ### CONFIGURE
 
 Configure the Jenkins root `URL` and `JOB` name.
 
-```
-% git config --local jenkins.status.url :URL"
-% git config --local jenkins.status.job :JOB"
-```
+    % git config --local jenkins.status.url :URL"
+    % git config --local jenkins.status.job :JOB"
 
 _Optionally_ configure your Jenkins `USERNAME` and `PASSWORD`.
 
-```
-% git config --local jenkins.status.username :USERNAME"
-% git config --local jenkins.status.password :PASSWORD"
-```
+    % git config --local jenkins.status.username :USERNAME"
+    % git config --local jenkins.status.password :PASSWORD"
 
 ### AUTHOR
 
