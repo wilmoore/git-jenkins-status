@@ -72,6 +72,7 @@ Run the following command
 ### INSPIRATION
 
 - [git-hub](https://github.com/wilmoore/git-hub)
+- [git-extras](https://github.com/visionmedia/git-extras)
 
 ### AUTHOR
 
