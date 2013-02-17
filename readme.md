@@ -37,15 +37,15 @@ STATUS  : No recent builds failed.
 Configure the Jenkins root `URL` and `JOB` name.
 
 ```
-% git config --local jenkins.status.url :URL"
-% git config --local jenkins.status.job :JOB"
+% git config --local jenkins.status.url :URL
+% git config --local jenkins.status.job :JOB
 ```
 
 _Optionally_ configure your Jenkins `USERNAME` and `PASSWORD`.
 
 ```
-% git config --local jenkins.status.username :USERNAME"
-% git config --local jenkins.status.password :PASSWORD"
+% git config --local jenkins.status.username :USERNAME
+% git config --local jenkins.status.password :PASSWORD
 ```
 
 ### UPGRADE
