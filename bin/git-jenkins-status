@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+
+################################################################################
+# name: git-jenkins-status
+# what: quick jenkins/ci build status from the command-line
+################################################################################
+
+# copyright (c) 2013 Wil Moore III <wil.moore@wilmoore.com>
+
+################################################################################
+# command-line options
+################################################################################
+
+LONG_USAGE="quick jenkins build status from the command-line."
+
+################################################################################
+# NOT RECOMMENDED TO MODIFY UNLESS YOU KNOW EXACTLY WHAT YOU ARE DOING!
+################################################################################
+
+# program version
+VERSION=0.0.1
+
+# run from a subdirectory
+SUBDIRECTORY_OK=Yes
+
+################################################################################
+# bootstrap
+################################################################################
+
+. git-sh-setup
+. git-sh-i18n
+
+################################################################################
+# check configuration
+################################################################################
+
+JENKINS_USERNAME=$(git config --local --get jenkins.status.username)
+
+if [[ $? -ne 0 ]]; then
+  echo "Please set 'jenkins.status.username'"
+  echo "git config --local jenkins.status.username :USERNAME"
+  exit $?
+fi
+
+JENKINS_PASSWORD=$(git config --local --get jenkins.status.password)
+
+if [[ $? -ne 0 ]]; then
+  echo "Please set 'jenkins.status.password'"
+  echo "git config --local jenkins.status.password :PASSWORD"
+  exit $?
+fi
+
+JENKINS_URL=$(git config --local --get jenkins.status.url)
+
+if [[ $? -ne 0 ]]; then
+  echo "Please set 'jenkins.status.url'"
+  echo "git config --local jenkins.status.url :URL"
+  exit $?
+fi
+
+JENKINS_JOBS=$(git config --local --get-all jenkins.status.job)
+
+if [[ $? -ne 0 || ${#JENKINS_JOBS[@]} -lt 1 ]]; then
+  echo "Please set at least one 'jenkins.status.job'"
+  echo "git config --local jenkins.status.job :JOB"
+  exit 1
+fi
+
+################################################################################
+# functions
+################################################################################
+
+function status.of()
+{
+  local AUTH="$JENKINS_USERNAME:$JENKINS_PASSWORD"
+  local  URL="$JENKINS_URL/job/$1/api/json?tree=healthReport%5Bdescription%5D"
+  local CURL=$(curl -s --user $AUTH $URL)
+
+  # whether CURL failed or succeeded
+  if [[ $? -ne 0 ]]; then
+    return $?
+  fi
+
+  # parse response text for pattern: '^Build stability:'
+  local DATA=$(echo $CURL | sed -e 's/[{}]/''/g' | awk -F'"' '{print $6}' | grep -E '^Build stability:')
+
+  # whether response text parsing failed or succeeded
+  if [[ -z $DATA ]]; then
+    echo "Unable to retrieve status."
+  fi
+
+  echo $DATA | awk -F'(: )' '{print $NF}'
+}
+
+################################################################################
+# main
+################################################################################
+
+echo ""
+for jobname in ${JENKINS_JOBS[@]}; do
+
+  echo "JOB NAME:" $jobname
+
+  status=$(status.of $jobname)
+
+  echo "STATUS  : $status"
+  echo ""
+
+done
+
