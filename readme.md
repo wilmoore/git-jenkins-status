@@ -23,6 +23,8 @@ JOB NAME: nwcoc.org
 STATUS  : No recent builds failed.
 ```
 
+More [examples here][examples-wiki].
+
 ### INSTALL
 
     % mkdir ~/local
@@ -109,3 +111,5 @@ Written by Wil Moore III &lt;<wil.moore@wilmoore.com>&gt;
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 
+
+[examples-wiki]: https://github.com/wilmoore/git-jenkins-status/wiki/examples

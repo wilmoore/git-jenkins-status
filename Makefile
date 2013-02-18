@@ -3,7 +3,7 @@ MAN_PAGES    = $(MAN_MARKDOWN:.md=.1)
 
 manpages: $(MAN_PAGES)
 
-share/man/man1/%.1: man/%.md
+%.1: %.md
 	@ronn -r --manual 'Git Jenkins Status' --pipe $< > $@
 
 .PHONY: manpages

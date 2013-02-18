@@ -1,9 +1,13 @@
 # git-jenkins-status(1) -- Quickly check Jenkins build status
 
-## EXAMPLE OUTPUT
+## EXAMPLES
+
+    % git jenkins-status
 
     JOB NAME: nwcoc.org
     STATUS  : No recent builds failed.
+
+More [examples here](https://github.com/wilmoore/git-jenkins-status/wiki/examples)
 
 ## CONFIGURE
 
