@@ -14,9 +14,11 @@ git jenkins-status
 
   I like to know the status of the build at all times.
 
-### EXAMPLE OUTPUT
+### EXAMPLES
 
 ```
+% git jenkins-status
+
 JOB NAME: nwcoc.org
 STATUS  : No recent builds failed.
 ```
