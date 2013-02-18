@@ -1,5 +1,7 @@
 # git-jenkins-status(1)
 
+![](http://f.cl.ly/items/3G270R2j3g3N2b283g24/Image%202013.02.17%207:43:25%20PM.png)
+
 ### SYNOPSIS
 
 ```
