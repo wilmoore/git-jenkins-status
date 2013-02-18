@@ -12,7 +12,7 @@
 ################################################################################
 
 # program version
-VERSION=0.0.5
+VERSION=0.0.6
 
 # run from a subdirectory
 SUBDIRECTORY_OK=Yes
@@ -21,10 +21,21 @@ SUBDIRECTORY_OK=Yes
 # bootstrap
 ################################################################################
 
+OPTIONS_SPEC=
 . git-sh-setup
+. git-sh-i18n
 
 ################################################################################
-# escapes
+# options
+################################################################################
+
+if [[ "$1" == "help" ]]; then
+  git help jenkins-status
+  exit 0
+fi
+
+################################################################################
+# colors
 ################################################################################
 
 GREEN="\e[0;32m"
@@ -33,39 +44,44 @@ RED="\e[0;31m"
 NOCOLOR="\e[0m"
 
 ################################################################################
+# strings
+################################################################################
+
+STR_JOBNAME=$(gettext "JOB NAME")
+STR_STATUS=$(gettext "STATUS")
+STR_UNABLE_TO_RETREIVE=$(gettext "Unable to retrieve status.")
+STR_NO_RECENT_FAILURES=$(gettext "No recent builds failed.")
+
+################################################################################
 # check configuration
 ################################################################################
 
 JENKINS_USERNAME=$(git config --local --get jenkins.status.username)
 
 if [[ $? -ne 0 ]]; then
-  echo "Please set 'jenkins.status.username'"
-  echo "git config --local jenkins.status.username :USERNAME"
-  exit $?
+  echo $(gettext "Please set 'jenkins.status.username'")
+  die  $(gettext "git config --local jenkins.status.username :USERNAME")
 fi
 
 JENKINS_PASSWORD=$(git config --local --get jenkins.status.password)
 
 if [[ $? -ne 0 ]]; then
-  echo "Please set 'jenkins.status.password'"
-  echo "git config --local jenkins.status.password :PASSWORD"
-  exit $?
+  echo $(gettext "Please set 'jenkins.status.password'")
+  die  $(gettext "git config --local jenkins.status.password :PASSWORD")
 fi
 
 JENKINS_URL=$(git config --local --get jenkins.status.url)
 
 if [[ $? -ne 0 ]]; then
-  echo "Please set 'jenkins.status.url'"
-  echo "git config --local jenkins.status.url :URL"
-  exit $?
+  echo $(gettext "Please set 'jenkins.status.url'")
+  die  $(gettext "git config --local jenkins.status.url :URL")
 fi
 
 JENKINS_JOBS=$(git config --local --get-all jenkins.status.job)
 
 if [[ $? -ne 0 || ${#JENKINS_JOBS[@]} -lt 1 ]]; then
-  echo "Please set at least one 'jenkins.status.job'"
-  echo "git config --local jenkins.status.job :JOB"
-  exit 1
+  echo $(gettext "Please set at least one 'jenkins.status.job'")
+  die  $(gettext "git config --local jenkins.status.job :JOB")
 fi
 
 ################################################################################
@@ -88,7 +104,7 @@ function status.of()
 
   # whether response text parsing failed or succeeded
   if [[ -z $DATA ]]; then
-    echo "Unable to retrieve status."
+    echo ${STR_UNABLE_TO_RETREIVE}
   fi
 
   echo $DATA | awk -F'(: )' '{print $NF}'
@@ -103,19 +119,19 @@ function main()
   echo ""
   for jobname in ${JENKINS_JOBS[@]}; do
 
-    echo "JOB NAME:" $jobname
+    echo "${STR_JOBNAME}:" $jobname
 
     status=$(status.of $jobname)
 
-    if   [[ $status == "No recent builds failed." ]]; then
+    if   [[ $status == "${STR_NO_RECENT_FAILURES}" ]]; then
       local COLOR=$GREEN
-    elif [[ $status == "Unable to retrieve status." ]]; then
+    elif [[ $status == "${STR_UNABLE_TO_RETREIVE}" ]]; then
       local COLOR=$YELLOW
     else
       local COLOR=$RED
     fi
 
-    printf "%s  : ${COLOR}%s${NOCOLOR}" "STATUS" "$status"
+    printf "%s  : ${COLOR}%s${NOCOLOR}" ${STR_STATUS} "$status"
     echo ""
     echo ""
 
