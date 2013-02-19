@@ -12,7 +12,7 @@
 ################################################################################
 
 # program version
-VERSION=0.0.6
+VERSION=0.0.7
 
 # run from a subdirectory
 SUBDIRECTORY_OK=Yes
@@ -91,23 +91,21 @@ fi
 function status.of()
 {
   local AUTH="$JENKINS_USERNAME:$JENKINS_PASSWORD"
-  local  URL="$JENKINS_URL/job/$1/api/json?tree=healthReport%5Bdescription%5D"
-  local CURL=$(curl -s --user $AUTH $URL)
-
-  # whether CURL failed or succeeded
-  if [[ $? -ne 0 ]]; then
-    return $?
-  fi
+  local  URL="$JENKINS_URL/job/$1/api/json?pretty=1"
 
   # parse response text for pattern: '^Build stability:'
-  local DATA=$(echo $CURL | sed -e 's/[{}]/''/g' | awk -F'"' '{print $6}' | grep -E '^Build stability:')
+  local RESPONSE=$(curl -s --user $AUTH $URL  | \
+    grep '"description" : "Build stability: ' | \
+    awk -F'[:"]' '{print $6}'                 | \
+    cut -d' ' -f2-
+  )
 
   # whether response text parsing failed or succeeded
-  if [[ -z $DATA ]]; then
+  if [[ -z $RESPONSE ]]; then
     echo ${STR_UNABLE_TO_RETREIVE}
   fi
 
-  echo $DATA | awk -F'(: )' '{print $NF}'
+  echo $RESPONSE
 }
 
 ################################################################################
