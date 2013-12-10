@@ -10,7 +10,7 @@ git jenkins-status
 
 ### DESCRIPTION
 
-  Git extension to quickly check Jenkins build status.
+  `git` extension to quickly check Jenkins build status.
 
 ### RATIONALE
 
